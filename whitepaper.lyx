@@ -1,0 +1,327 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrartcl
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman default
+\font_sans default
+\font_typewriter default
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip bigskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Proposal For RTS Game
+\end_layout
+
+\begin_layout Section*
+Gameplay
+\end_layout
+
+\begin_layout Subsection*
+Aim and Movement
+\end_layout
+
+\begin_layout Standard
+
+\series bold
+Objective: 
+\series default
+The objective of the game is to eliminate all opposing forces.
+\end_layout
+
+\begin_layout Standard
+The first formulation of the game is as follows.
+ Two players exist per game.
+ Each team is given reinforcements every time interval 
+\begin_inset Formula $t$
+\end_inset
+
+.
+ These individuals can be selected individually or as a group.
+ They can be commanded to move to a new point.
+ If they are in the vicinity of a flag, they will capture it as long as
+ they hold the ground of radius 
+\begin_inset Formula $r$
+\end_inset
+
+ free from any opposing force for a time of 
+\begin_inset Formula $c$
+\end_inset
+
+ seconds.
+ Holding a flag gives a bonus of 
+\begin_inset Formula $s$
+\end_inset
+
+ soldiers for every reinforcement period.
+ 
+\end_layout
+
+\begin_layout Standard
+The second formulation is to only give the user a set number of soldiers
+ to start with.
+ The map has countours to designate height: travel over hills is slower,
+ those at the top of the hills have a greater range and there is an 
+\begin_inset Quotes eld
+\end_inset
+
+entrenchment
+\begin_inset Quotes erd
+\end_inset
+
+ combat edge given to soldiers who have been idle for some time.
+\end_layout
+
+\begin_layout Standard
+The second formulation has been chosen for the rest of this proposal.
+\end_layout
+
+\begin_layout Subsection*
+Combat
+\end_layout
+
+\begin_layout Standard
+Units will fire upon any other enemy units if those units enter the attacking
+ range 
+\begin_inset Formula $a$
+\end_inset
+
+ of them.
+ They will fire, even still on the move, towards the direction of the other
+ soldiers - although within an accuracy of 
+\begin_inset Formula $\pm d$
+\end_inset
+
+ degrees.
+ They will have a fire rate of 
+\begin_inset Formula $f_{r}$
+\end_inset
+
+.
+ If a single bullet strikes a soldier, they will die with a certain probability
+ which depends on how entrenched the enemies are.
+ The attacking radius of those higher up is larger.
+\end_layout
+
+\begin_layout Subsection*
+Environment
+\end_layout
+
+\begin_layout Standard
+The environment will exist of elevations/heights, unpassable obstacles (like
+ a river) and unpassable and cover-providing obstacles (like a concrete
+ wall).
+\end_layout
+
+\begin_layout Standard
+At first, only one environment shall be provided and it will be hardcoded
+ into the game.
+\end_layout
+
+\begin_layout Subsection*
+Opponents
+\end_layout
+
+\begin_layout Standard
+A network provided opponent shall be selected from a user-provided opponent
+ IP address.
+ They shall play until one achieves the objective, and then the connection
+ is dissolved.
+\end_layout
+
+\begin_layout Section*
+Technical Structure
+\end_layout
+
+\begin_layout Standard
+Network code and gameplay technical concepts shall be decided later and
+ its implementation discussed in the technologies section.
+\end_layout
+
+\begin_layout Standard
+Four files contain the map itself.
+ One contains a series of nodes that cover the map; these must go around
+ obstacles and is used for navigation and also holds elevation information.
+ Another maps the size and shape of passable and impassable barriers.
+ The other two are display maps; one to be rendered underneath the combatants,
+ another above.
+\end_layout
+
+\begin_layout Section*
+Technologies
+\end_layout
+
+\begin_layout Standard
+Websocket will be used to connect with another player.
+ Network transmissions will only include the moves ordered; the fact that
+ the seeds shall be the same should result in identical gameplay moves -
+ hmm, will have to think about that.
+\end_layout
+
+\begin_layout Standard
+The game shall be written in Javascript, HTML and SVG.
+ 
+\end_layout
+
+\begin_layout Section*
+Timeline
+\end_layout
+
+\begin_layout Standard
+Development shall be carried out in the following phases:
+\end_layout
+
+\begin_layout Enumerate
+Technology preview: 
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Brush up on Javascript
+\end_layout
+
+\begin_layout Enumerate
+Start with manipulating SVG on the fly
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Basic movement
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create simple display map and soldier sprite
+\end_layout
+
+\begin_layout Enumerate
+Spawn a single soldier on it, make him respond to clicks for movement
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create a function which decides on movement step-by step, returning the
+ minimum next step possible
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Make multiple selection of soldiers possible, changing selections
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Advanced movement
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create elevation/obstacle map
+\end_layout
+
+\begin_layout Enumerate
+Implement a better path finding algorithm which takes obstacles and elevation
+ into account
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Simple combat
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Create an enemy force, for now controllable by the same user
+\end_layout
+
+\begin_layout Enumerate
+Implement a data structure for quick location-based retrieval of units (ie
+ a quadtree)
+\end_layout
+
+\begin_layout Enumerate
+Implement a detection algorithm for determining when an enemy is in range,
+ taking altitude into account.
+\end_layout
+
+\begin_layout Enumerate
+Implement a firing mechanism
+\end_layout
+
+\begin_layout Enumerate
+Make unit death a possibility!
+\end_layout
+
+\end_deeper
+\begin_layout Enumerate
+Network code
+\end_layout
+
+\begin_deeper
+\begin_layout Enumerate
+Work on this later...
+\end_layout
+
+\end_deeper
+\end_body
+\end_document
