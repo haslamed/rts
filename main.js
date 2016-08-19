@@ -8,6 +8,8 @@ window.onload = function () {
     
     // add soldiers to stage
     loadSprite("soldier","soldier1");
+    loadSprite("soldier","soldier1");
+    loadSprite("soldier","soldier1");
     
 	// set up event listeners
     var circle  = document.getElementById("soldier1");
@@ -21,7 +23,6 @@ function select(e) {
     var target = e.target;
     target.setAttribute("fill","black");
     selected.push(target);
-    console.log("here");
 }
 
 // manages target position of combat unit
