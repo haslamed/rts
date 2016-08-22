@@ -3,16 +3,3 @@ html, body {
 	padding:0; 
 	overflow:hidden 
 }
-
-.animate { 
-	transition: all 0.5s ease;
-    transform: translateY(-25px)
-}
-
-
-@keyframes example {
-	0%   {transform: translateY(0)}
-  	25%  {transform: translateY(-25px)}
-  	75%  {transform: translateY(25px)}
-  	100% {transform: translateY(0)}
-}

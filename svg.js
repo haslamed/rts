@@ -6,18 +6,14 @@
 // animates a given object by the distance dx, dy
 function animateToPos(elem, dx,dy) {
     var duration = 0.05*Math.pow(dx*dx+dy*dy,0.5);
-    elem.setAttribute("style","transition: all "+duration+"s linear;transform: translateY("+dy+"px) translateX("+dx+"px)");
+    console.log(dx+" "+dy+" "+duration);
+    elem.setAttribute("style","transition: transform "+duration+"s linear;transform: translateY("+dy+"px) translateX("+dx+"px)");
 }
 
-// loads a sprite from a svg file (fileName) and uploads it to the stage with ID spriteId
-function loadSprite(fileName, spriteId) {
-    // request the server to get soldier sprite
-    xhr = new XMLHttpRequest();
-    xhr.open("GET","soldier.svg",false);
-    xhr.overrideMimeType("image/svg+xml");
-    xhr.send("");
-    
-    // place the sprite on the stage
-    xhr.responseXML.documentElement.setAttribute("id",spriteId);
-    document.getElementById("stage").appendChild(xhr.responseXML.documentElement);
+// places the relevant sprite on the stage
+function placeSprite(spriteName, spriteId) {
+    var sprite = sprites[spriteName].cloneNode(true);
+    sprite.setAttribute("id",spriteId);
+    document.getElementById("stage").appendChild(sprite);
+    return sprite;
 }
